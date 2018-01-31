@@ -15,3 +15,5 @@ RUN chmod +x /app/get-unity.sh && \
     chmod +x /app/run-unity.sh
 
 RUN /app/get-unity.sh
+
+ENV PATH="/app:${PATH}"
