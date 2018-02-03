@@ -17,8 +17,22 @@ RUN apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv-keys 3FA7E03280
 #    echo $NUGET_SCRIPT > /usr/bin/nuget && \
 #    chmod +x /usr/bin/nuget
 
+#RUN mkdir -p /opt/paket && cd /opt/paket && \
+#    curl -L https://github.com/fsprojects/Paket/archive/5.133.0.tar.gz -o "paket.tar.gz" && \
+#    tar -xvzf paket.tar.gz --strip 1 && \
+#    rm paket.tar.gz 
+    #&& \
+   # ./build.sh && \
+   # ./install.sh
+
 RUN mkdir -p /opt/paket && cd /opt/paket && \
     curl -L https://github.com/fsprojects/Paket/releases/download/5.133.0/paket.exe -o "paket.exe" && \
     PAKET_SCRIPT='#!/bin/sh\nmono /opt/paket/paket.exe "$@"' && \
     echo $PAKET_SCRIPT > /usr/bin/paket && \
     chmod +x /usr/bin/paket
+
+RUN cd /opt/paket && \
+    curl -L https://github.com/wooga/Paket.Unity3D/releases/download/0.3.0/paket.unity3d.exe -o "paket_unity3d.exe" && \
+    PAKET3D_SCRIPT='#!/bin/sh\nmono /opt/paket/paket_unity3d.exe "$@"' && \
+    echo $PAKET3D_SCRIPT > /usr/bin/paket_unity3d && \
+    chmod +x /usr/bin/paket_unity3d
