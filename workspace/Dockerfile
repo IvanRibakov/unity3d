@@ -18,7 +18,7 @@ RUN apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv-keys 3FA7E03280
 #    chmod +x /usr/bin/nuget
 
 RUN mkdir -p /opt/paket && cd /opt/paket && \
-    curl -L https://github.com/fsprojects/Paket/releases/download/5.133.0/paket.exe -o "paket.exe"
+    curl -L https://github.com/fsprojects/Paket/releases/download/5.133.0/paket.exe -o "paket.exe" && \
     PAKET_SCRIPT='#!/bin/sh\nmono /opt/paket/paket.exe "$@"' && \
     echo $PAKET_SCRIPT > /usr/bin/paket && \
     chmod +x /usr/bin/paket
