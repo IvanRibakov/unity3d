@@ -36,3 +36,9 @@ RUN cd /opt/paket && \
     PAKET3D_SCRIPT='#!/bin/sh\nmono /opt/paket/paket_unity3d.exe "$@"' && \
     echo $PAKET3D_SCRIPT > /usr/bin/paket_unity3d && \
     chmod +x /usr/bin/paket_unity3d
+
+RUN apt-get install -y git
+
+RUN cd ~ && git clone https://github.com/IvanRibakov/stylecopcli.git && cd stylecopcli && git checkout path-fix && msbuild
+
+
