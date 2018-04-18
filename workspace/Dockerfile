@@ -11,12 +11,6 @@ RUN apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv-keys 3FA7E03280
     apt-get update && \
     apt-get install -y mono-devel ca-certificates-mono nunit-console
 
-#RUN mkdir /opt/nuget && \
-#    curl https://dist.nuget.org/win-x86-commandline/v4.4.1/nuget.exe -o /opt/nuget/nuget.exe && \
-#    NUGET_SCRIPT='#!/bin/sh\nmono /opt/nuget/nuget.exe "$@"' && \
-#    echo $NUGET_SCRIPT > /usr/bin/nuget && \
-#    chmod +x /usr/bin/nuget
-
 #RUN mkdir -p /opt/paket && cd /opt/paket && \
 #    curl -L https://github.com/fsprojects/Paket/archive/5.133.0.tar.gz -o "paket.tar.gz" && \
 #    tar -xvzf paket.tar.gz --strip 1 && \
@@ -41,4 +35,16 @@ RUN apt-get install -y git
 
 RUN cd ~ && git clone https://github.com/IvanRibakov/stylecopcli.git && cd stylecopcli && git checkout path-fix && msbuild
 
+RUN mkdir /opt/nuget && \
+    curl https://dist.nuget.org/win-x86-commandline/v4.4.1/nuget.exe -o /opt/nuget/nuget.exe && \
+    NUGET_SCRIPT='#!/bin/sh\nmono /opt/nuget/nuget.exe "$@"' && \
+    echo $NUGET_SCRIPT > /usr/bin/nuget && \
+    chmod +x /usr/bin/nuget
+
+RUN mkdir /opt/nunit && cd /opt/nunit && \
+    nuget install NUnit && \
+    nuget install NUnit.Runners && \
+    NUNIT_SCRIPT='#!/bin/sh\nmono /opt/nunit/NUnit.ConsoleRunner.3.8.0/tools/nunit3-console.exe "$@"' && \
+    echo $NUNIT_SCRIPT > /usr/bin/nunit3-console && \
+    chmod +x /usr/bin/nunit3-console
 
